@@ -51,7 +51,7 @@ HWND Wallpaper::GetHWND()
 }
 
 
-template <class T> void SafeRelease(T **ppT)
+template<class T> void SafeRelease(T **ppT)
 {
 	if (*ppT)
 	{
@@ -60,6 +60,7 @@ template <class T> void SafeRelease(T **ppT)
 	}
 }
 
+//Copy from MSDN
 
 MFCore::MFCore(HWND hVideo) :
 	m_pMediaSession(NULL),
@@ -76,11 +77,18 @@ MFCore::MFCore(HWND hVideo) :
 MFCore::~MFCore(void)
 {
 	if (m_pMediaSession)
-		m_pMediaSession->Close();
-	if (m_pMediaSource)
-		m_pMediaSource->Shutdown();
-	if (m_pMediaSession)
+	{
 		m_pMediaSession->Shutdown();
+		m_pMediaSession->Close();
+		SafeRelease(&m_pMediaSession);
+	}
+	if (m_pMediaSource)
+	{
+		m_pMediaSource->Shutdown();
+		SafeRelease(&m_pMediaSource);
+	}
+	if (m_pVideoControl)
+		SafeRelease(&m_pVideoControl);
 }
 
 HRESULT MFCore::QueryInterface(REFIID riid, void** ppv)

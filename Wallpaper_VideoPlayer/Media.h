@@ -22,16 +22,16 @@ private:
 
 extern Wallpaper wall;
 
+//Copy from MSDN
+
 class MFCore : public IMFAsyncCallback
 {
 public:
 	MFCore(HWND);
 	~MFCore();
-	// IUnknown方法  
 	STDMETHODIMP QueryInterface(REFIID iid, void** ppv);
 	STDMETHODIMP_(ULONG) AddRef();
 	STDMETHODIMP_(ULONG) Release();
-	// IMFAsyncCallback方法  
 	STDMETHODIMP GetParameters(DWORD*, DWORD*)
 	{ return E_NOTIMPL;	}
 	STDMETHODIMP Invoke(IMFAsyncResult* pAsyncResult);
