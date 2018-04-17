@@ -8,6 +8,8 @@
 #include <shlwapi.h>  // QITABENT, shlwapi.lib  
 #include <mferror.h>  // MF_E_ALREADY_INITIALIZED  
 
+#define WM_APP_PLAYER_EVENT WM_USER+2
+
 RECT GetDisplayResolution();
 
 class Wallpaper

@@ -240,6 +240,12 @@ HRESULT MFCore::Invoke(IMFAsyncResult* pResult)
 	hr = pEvent->GetType(&meType);
 	if (FAILED(hr))  goto over;
 
+#ifdef _DEBUG
+	TCHAR text[100];
+	wsprintf(text, L"%d\n", meType);
+	OutputDebugString(text);
+#endif
+
 	if (meType != MESessionClosed)
 	{
 		hr = m_pMediaSession->BeginGetEvent(this, NULL);
@@ -262,6 +268,7 @@ HRESULT MFCore::Invoke(IMFAsyncResult* pResult)
 		hr = OnTopologyStatus(pEvent);
 		break;
 	case MEEndOfPresentation:
+		m_pMediaSession->Stop();
 		hr = Play();
 		break;
 	default:
@@ -277,6 +284,11 @@ HRESULT MFCore::OnTopologyStatus(IMFMediaEvent* pEvent)
 {
 	MF_TOPOSTATUS status;
 	HRESULT hr = pEvent->GetUINT32(MF_EVENT_TOPOLOGY_STATUS, (UINT32*)&status);
+#ifdef _DEBUG
+	TCHAR tt[100];
+	wsprintf(tt, L"t%d\n", status);
+	OutputDebugString(tt);
+#endif
 	if (SUCCEEDED(hr) && (status == MF_TOPOSTATUS_READY))
 	{
 		SafeRelease(&m_pVideoControl);

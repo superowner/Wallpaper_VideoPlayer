@@ -100,6 +100,11 @@ int WINAPI CALLBACK wWinMain(
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
+#ifdef _DEBUG
+	TCHAR tt[100];
+	wsprintf(tt, L"w%d\n", msg);
+	OutputDebugString(tt);
+#endif
 	switch (msg)
 	{
 	case WM_NOTIFYICON:
